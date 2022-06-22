@@ -1,11 +1,13 @@
 package firebase.app.voicerecognizera
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import androidx.core.app.ActivityCompat
 import firebase.app.voicerecognizera.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,6 +19,10 @@ private lateinit var binding: ActivityMainBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        ActivityCompat.requestPermissions(this,
+        arrayOf(android.Manifest.permission.RECORD_AUDIO),
+        PackageManager.PERMISSION_GRANTED)
 
         val intentRecognizer = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         intentRecognizer.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL
@@ -46,6 +52,7 @@ private lateinit var binding: ActivityMainBinding
 
             override fun onError(p0: Int) {
 
+
             }
 
             override fun onResults(p0: Bundle?) {
@@ -53,7 +60,7 @@ private lateinit var binding: ActivityMainBinding
                 var string = ""
                 if (!matches.isNullOrEmpty()){
                     string = matches.get(0)
-                    binding.txtView.text = string
+                    binding.txtView.text = string //OBTENER LO DEL UN ARRAY TLIST
 
                 }
             }
